@@ -26,8 +26,7 @@ public class XRF_UPenn_InteractionController : MonoBehaviour
     public InteractionType myType = InteractionType.OnOffController;  // this public var should appear as a drop down
 
     //animation stuff
-    public GameObject ObjectWithAnimation;
-    private Animator theAnimator;
+    public Animator ObjectWithAnimation;
 
     public bool isSelected;
     public bool isTeleporter;
@@ -74,14 +73,13 @@ public class XRF_UPenn_InteractionController : MonoBehaviour
         }
         else if (myType == InteractionType.AnimationController)
         {
-            theAnimator = ObjectWithAnimation.GetComponent<Animator>();
-            if (theAnimator != null)
+            if (ObjectWithAnimation != null)
             {
-                string animName = theAnimator.runtimeAnimatorController.animationClips[0].name;
+                string animName = ObjectWithAnimation.runtimeAnimatorController.animationClips[0].name;
                 //Debug.Log("my animation is called: " + animName);
                 //play on start but set to false so it stops
-                theAnimator.Play(animName, 0, 0);
-                theAnimator.enabled = false;
+                ObjectWithAnimation.Play(animName, 0, 0);
+                ObjectWithAnimation.enabled = false;
             }
         }
         else if (myType == InteractionType.TeleportController)
@@ -137,41 +135,41 @@ public class XRF_UPenn_InteractionController : MonoBehaviour
             //play or pause animation
             //note, the animator must make a transition to exit if it is not on loop.
 
-            string animName = theAnimator.runtimeAnimatorController.animationClips[0].name;
+            string animName = ObjectWithAnimation.runtimeAnimatorController.animationClips[0].name;
             Debug.Log("my animation is called: " + animName);
 
-            Debug.Log("my animator state info normalized time: " + theAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime); //< if this is at 1 its done
-            Debug.Log("my animator state info is loop true: " + theAnimator.runtimeAnimatorController.animationClips[0].isLooping); //< if this is at 1 its done
+            Debug.Log("my animator state info normalized time: " + ObjectWithAnimation.GetCurrentAnimatorStateInfo(0).normalizedTime); //< if this is at 1 its done
+            Debug.Log("my animator state info is loop true: " + ObjectWithAnimation.runtimeAnimatorController.animationClips[0].isLooping); //< if this is at 1 its done
 
-            if(theAnimator.runtimeAnimatorController.animationClips[0].isLooping) //if loop is true
+            if (ObjectWithAnimation.runtimeAnimatorController.animationClips[0].isLooping) //if loop is true
             {
-                if (theAnimator.isActiveAndEnabled) //if i am currently on, turn off
+                if (ObjectWithAnimation.isActiveAndEnabled) //if i am currently on, turn off
                 {
                     Debug.Log("my animation was playing and enabled, it will stop now");
-                    theAnimator.enabled = false;
+                    ObjectWithAnimation.enabled = false;
                 }
                 else //if i am currently off, turn on
                 {
-                    theAnimator.enabled = true;
+                    ObjectWithAnimation.enabled = true;
                 }
             }
             else //loop is false
             {
-                if (theAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1) //if i am done with my animation sequence (at the end)
+                if (ObjectWithAnimation.GetCurrentAnimatorStateInfo(0).normalizedTime > 1) //if i am done with my animation sequence (at the end)
                 {
-                    theAnimator.Play(animName, 0, 0);
-                    theAnimator.enabled = true;
+                    ObjectWithAnimation.Play(animName, 0, 0);
+                    ObjectWithAnimation.enabled = true;
                 }
                 else //either i am paused or i am playing and not done
                 {
-                    if (theAnimator.isActiveAndEnabled) //if i am currently on, turn off
+                    if (ObjectWithAnimation.isActiveAndEnabled) //if i am currently on, turn off
                     {
                         Debug.Log("my animation was playing and enabled, it will stop now");
-                        theAnimator.enabled = false;
+                        ObjectWithAnimation.enabled = false;
                     }
                     else //if i am currently off, turn on
                     {
-                        theAnimator.enabled = true;
+                        ObjectWithAnimation.enabled = true;
                     }
                 }
             }

@@ -79,7 +79,7 @@ public class XRF_InteractionControllerEditor : Editor
         }
         else if (script.myType == XRF_UPenn_InteractionController.InteractionType.AnimationController)
         {
-            script.ObjectWithAnimation = (GameObject)EditorGUILayout.ObjectField("Object with Animation", script.ObjectWithAnimation, typeof(GameObject), true);
+            script.ObjectWithAnimation = (Animator)EditorGUILayout.ObjectField("Object with Animation", script.ObjectWithAnimation, typeof(Animator), true);
         }
         else if (script.myType == XRF_UPenn_InteractionController.InteractionType.SceneChangeController)
         {
