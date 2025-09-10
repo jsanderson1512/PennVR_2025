@@ -38,7 +38,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/STUDENT_Scenes/Archive/In Class 06 Full Example.unity
     guid: cc0dffac310e91d48868c7cb12b9001a
-  - enabled: 1
+  - enabled: 0
     path: Assets/STUDENT_Scenes/Archive/In Class 07 Book in Hand etc.unity
     guid: 7eab1e2afa210c342bf2286d8805fc27
   m_configObjects:
