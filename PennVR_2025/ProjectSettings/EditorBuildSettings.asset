@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/XRF_Scenes/ExampleScene_Lighting_Dark Scene.unity
     guid: 04154da2b57ceb846adf509a51f888ae
-  - enabled: 0
+  - enabled: 1
+    path: Assets/XRF_Scenes/ExampleScene_Interaction_01.unity
+    guid: 2964452fe26a63343b176c5758a2e148
+  - enabled: 1
     path: Assets/XRF_Scenes/ExampleScene_VFX.unity
     guid: 3b09bd547d17c0f41bf1f5ab8562cbaa
   - enabled: 0
@@ -29,10 +32,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/XRF_Scenes/Archive/Testing New Scripts.unity
     guid: 1a97b34716534ca47945b5d467f09abe
-  - enabled: 0
-    path: Assets/XRF_Scenes/ExampleScene_Interaction_01.unity
-    guid: 2964452fe26a63343b176c5758a2e148
-  - enabled: 0
+  - enabled: 1
     path: Assets/XRF_Scenes/ExampleScene_Interaction_02.unity
     guid: 2c822b16ce570f24ea870a981c76b94a
   - enabled: 0
@@ -41,7 +41,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/STUDENT_Scenes/Archive/In Class 07 Book in Hand etc.unity
     guid: 7eab1e2afa210c342bf2286d8805fc27
-  - enabled: 1
+  - enabled: 0
     path: Assets/STUDENT_Scenes/In Class 2025 Lighting Dark.unity
     guid: e0f781adb953fb2499a5df0940286fd6
   m_configObjects:
