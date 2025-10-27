@@ -14,6 +14,11 @@ public class XRF_InteractionControllerEditor : Editor
         XRF_UPenn_InteractionController script = (XRF_UPenn_InteractionController)target;
         script.myType = (XRF_UPenn_InteractionController.InteractionType)EditorGUILayout.EnumPopup("Interaction Type", script.myType);
 
+
+
+
+        //if trigger is false, and it is not a teleporter, turn ON the highlight material
+
         //highlight material if raycast is selected only! also, turn off if you are a teleport controller
         if (script.gameObject.GetComponent<Collider>().isTrigger == false && script.myType != XRF_UPenn_InteractionController.InteractionType.TeleportController)
         {
@@ -27,16 +32,26 @@ public class XRF_InteractionControllerEditor : Editor
             }
         }
 
+
+
+
+        //if you are a trigger, dont allow you to do teleport or grab interactions
+        
         //
         if(script.gameObject.GetComponent<Collider>().isTrigger == true)
         {
             //don't allow you to do grab or teleport if you are a trigger
-            if(script.myType == XRF_UPenn_InteractionController.InteractionType.TeleportController || script.myType == XRF_UPenn_InteractionController.InteractionType.GrabAndReturn || script.myType == XRF_UPenn_InteractionController.InteractionType.GrabAndStay)
+            if(script.myType == XRF_UPenn_InteractionController.InteractionType.TeleportController || script.myType == XRF_UPenn_InteractionController.InteractionType.GrabAndReturn || script.myType == XRF_UPenn_InteractionController.InteractionType.GrabAndStay || script.myType == XRF_UPenn_InteractionController.InteractionType.GrabAttachToHand)
             {
-                script.myType = XRF_UPenn_InteractionController.InteractionType.AnimationController;
+                script.myType = XRF_UPenn_InteractionController.InteractionType.OnOffController;
             }
         }
-        else if (script.myType == XRF_UPenn_InteractionController.InteractionType.OnOffController)
+
+
+
+        //check for interaction types
+
+        if (script.myType == XRF_UPenn_InteractionController.InteractionType.OnOffController)
         {
             script.NumberOfThingsToTurnON = EditorGUILayout.IntField("Number of Things to Turn ON", script.NumberOfThingsToTurnON);
             GameObject[] tempOns = script.StartOFFClickON;
