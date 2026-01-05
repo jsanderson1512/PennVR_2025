@@ -8,18 +8,12 @@ public class Custom_DontDestroyCollector : MonoBehaviour
     public static Custom_DontDestroyCollector instance;
 
 
-    public bool collectedUmbrella;
-    public bool collectedFireExtinguisher;
-    public bool collectedHat;
+    public string[] thingsToPickUpTags;
+    public string[] thingsAffectedByPickUpsTag;
+    public bool[] alreadyPickedUp;
 
-    private GameObject umbrella;
-    private GameObject fireExtinguisher;
-    private GameObject hat;
-
-
-    private GameObject rain;
-    private GameObject fire;
-    private GameObject crane;
+    private List<GameObject> thingsToPickUp = new List<GameObject>();
+    private List<GameObject> thingsAffectedByPickUps = new List<GameObject>();
 
 
     //this is a script that will follow you scene-to-scene. to check for if you have collected 
@@ -38,12 +32,15 @@ public class Custom_DontDestroyCollector : MonoBehaviour
         else
         {
             instance.CheckforStuff();
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
 
 
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this.gameObject);
+
+        //StartCoroutine(waitForSomeTime(5));
     }
+
 
     private void Start()
     {
@@ -51,52 +48,61 @@ public class Custom_DontDestroyCollector : MonoBehaviour
     }
     private void CheckforStuff()
     {
-        umbrella = GameObject.FindGameObjectWithTag("umbrella");
-        fireExtinguisher = GameObject.FindGameObjectWithTag("fireExtinguisher");
-        hat = GameObject.FindGameObjectWithTag("hat");
-
-        rain = GameObject.FindGameObjectWithTag("rain");
-        fire = GameObject.FindGameObjectWithTag("fire");
-        crane = GameObject.FindGameObjectWithTag("crane");
-
+        //this happens at the start of a scene
 
         Debug.Log("hello i am checking for stuff");
+        int pickUpsFound = 0;
+        int pickUpsAffectedFound = 0;
 
+        thingsToPickUp = new List<GameObject>();
+        thingsAffectedByPickUps = new List<GameObject>();
 
-        if (collectedUmbrella)
+        for (int i = 0; i < thingsToPickUpTags.Length; i++)
         {
-            if (umbrella != null)
+            GameObject g = GameObject.FindGameObjectWithTag(thingsToPickUpTags[i]);
+            if (g != null)
             {
-                umbrella.SetActive(false);
-                //we will also turn off the rain somehow...
+                thingsToPickUp.Add(g);
+                pickUpsFound++;
             }
-            if(rain !=null)
+            else
             {
-                rain.SetActive(false);
+                thingsToPickUp.Add(null);
             }
         }
-        if (collectedFireExtinguisher)
+
+        for (int i = 0; i < thingsAffectedByPickUpsTag.Length; i++)
         {
-            if (fireExtinguisher != null)
+            GameObject g = GameObject.FindGameObjectWithTag(thingsAffectedByPickUpsTag[i]);
+            if (g != null)
             {
-                fireExtinguisher.SetActive(false);
-                //we will also turn off the fire somehow
+                thingsAffectedByPickUps.Add(g);
+                pickUpsAffectedFound++;
             }
-            if(fire !=null)
+            else
             {
-                fire.SetActive(false);
+                thingsAffectedByPickUps.Add(null);
             }
         }
-        if (collectedHat)
+
+        Debug.Log("i found this many pickups: " + pickUpsFound);
+        Debug.Log("i found this many affected pickups: " + pickUpsAffectedFound);
+
+
+        for (int i = 0; i < alreadyPickedUp.Length; i++)
         {
-            if (hat != null)
+            if (alreadyPickedUp[i] == true)
             {
-                hat.SetActive(false);
-                //we will also turn off the fog? somehow
-            }
-            if(crane !=null)
-            {
-                crane.SetActive(false);
+                //turn off associated things in other scenes
+                if (thingsAffectedByPickUps[i] != null)
+                {
+                    thingsAffectedByPickUps[i].SetActive(false);
+                }
+                //turn off already picked up stuff
+                if (thingsToPickUp[i] != null)
+                {
+                    thingsToPickUp[i].SetActive(false);
+                }
             }
         }
 
@@ -105,40 +111,28 @@ public class Custom_DontDestroyCollector : MonoBehaviour
 
     private void Update()
     {
-        //CheckforStuff();
-
-        if (!collectedUmbrella)
+        for (int i = 0; i < alreadyPickedUp.Length; i++)
         {
-            if (umbrella != null)
+            if (alreadyPickedUp[i] == false)
             {
-                if(umbrella.activeSelf==false)
+                //Debug.Log("hey looking for item: " + i);
+
+                if (thingsToPickUp[i]!=null)
                 {
-                    collectedUmbrella = true;
+                    //Debug.Log("hey i found this thing to pick up its name is:" + thingsToPickUp[i].name);
+                    if (thingsToPickUp[i].activeSelf == false)
+                    {
+                        alreadyPickedUp[i] = true;
+                        CheckforStuff();
+                    }
                 }
             }
         }
-        if (!collectedFireExtinguisher)
-        {
+    }
 
-            if (fireExtinguisher != null)
-            {
-                //Debug.Log("i found the fire extinguisher tag");
-
-                if (fireExtinguisher.activeSelf == false)
-                {
-                    collectedFireExtinguisher = true;
-                }
-            }
-        }
-        if (!collectedHat)
-        {
-            if (hat != null)
-            {
-                if (hat.activeSelf == false)
-                {
-                    collectedHat = true;
-                }
-            }
-        }
+    IEnumerator waitForSomeTime(int howLong)
+    {
+        yield return new WaitForSeconds(howLong);
+        //some stuff happens after Howlong seconds
     }
 }

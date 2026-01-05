@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Thing1
+  - Thing2
+  - Reaction1
+  - Reaction2
   layers:
   - Default
   - TransparentFX
